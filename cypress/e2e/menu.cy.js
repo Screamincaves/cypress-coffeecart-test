@@ -7,12 +7,18 @@ describe('Coffee-cart menu tests', () => {
   });
 
   it('Should display the menu page', () => {
+    //Simple check to make sure page loads
     cy.log('Nav bar is displayed');
     cy.get('[aria-label="Menu page"]').contains('menu').should('be.visible');
     cy.get('[aria-label="Cart page"]').contains('cart').should('be.visible');
+    cy.log('First coffee cup is displayed');
+    coffeeCup.coffeeCupHeadingDisplayed('Espresso');
+    cy.get('h4').find('small').eq(0).contains('$').should('be.visible');
+    cy.get('.cup').eq(0).should('be.visible');
   });
 
   it('Should display expected coffee products', () => {
+    //Grab each coffee cup product and verify that they are displayed
     cy.log('Coffee products are displayed');
     //Espresso product displayed
     coffeeCup.coffeeCupHeadingDisplayed('Espresso');
