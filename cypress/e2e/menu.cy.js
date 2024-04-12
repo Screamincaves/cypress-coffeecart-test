@@ -1,20 +1,11 @@
 import { coffeeCup } from '../support/pageObjects/menuPage';
+import { menuPage } from '../support/pageObjects/menuPage';
 
 describe('Coffee-cart menu tests', () => {
   beforeEach('Navigate to site', () => {
     cy.log('Navigate to coffee-cart menu page');
     cy.visit('/');
-  });
-
-  it('Should display the menu page', () => {
-    //Simple check to make sure page loads
-    cy.log('Nav bar is displayed');
-    cy.get('[aria-label="Menu page"]').contains('menu').should('be.visible');
-    cy.get('[aria-label="Cart page"]').contains('cart').should('be.visible');
-    cy.log('First coffee cup is displayed');
-    coffeeCup.coffeeCupHeadingDisplayed('Espresso');
-    cy.get('h4').find('small').eq(0).contains('$').should('be.visible');
-    cy.get('.cup').eq(0).should('be.visible');
+    menuPage.menuPageDisplayed();
   });
 
   it('Should display expected coffee products', () => {
@@ -75,4 +66,31 @@ describe('Coffee-cart menu tests', () => {
       'milk foam',
     ]);
   });
+
+  it('Single product added to cart', () => {
+    cy.log('Verify cart is empty');
+    menuPage.verifyMenuCartValue(0);
+    menuPage.verifyCheckoutValue('0.00');
+
+    cy.log('Add coffee product to cart');
+    //Add a single coffee product to cart
+    cy.clickDataElement('Espresso');
+    menuPage.verifyMenuCartValue(1);
+    menuPage.verifyCheckoutValue('10.00');
+  });
+
+  it('Multiple coffee products added to cart', () => {
+    cy.log('Verify cart is empty');
+    menuPage.verifyMenuCartValue(0);
+    menuPage.verifyCheckoutValue('0.00');
+
+    cy.log('Add two coffee products to basket');
+    //Add two coffee products to basket
+    cy.clickDataElement('Espresso');
+    cy.clickDataElement('Americano');
+    menuPage.verifyMenuCartValue(2);
+    menuPage.verifyCheckoutValue('17.00');
+  });
+
+  it('Displays confirm modal when right clicking on coffee product', () => {});
 });
