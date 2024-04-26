@@ -18,6 +18,13 @@ export const menuPage = {
       `Total: $${checkoutValue}`
     );
   },
+  addToCartModalDisplayed: () => {
+    cy.get('[data-cy="add-to-cart-modal"]').then((addToCartModal) => {
+      cy.wrap(addToCartModal).should('be.visible');
+      cy.wrap(addToCartModal).find('button').contains('Yes');
+      cy.wrap(addToCartModal).find('button').contains('No');
+    });
+  },
 };
 
 export const coffeeCup = {

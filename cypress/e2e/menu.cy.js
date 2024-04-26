@@ -92,5 +92,14 @@ describe('Coffee-cart menu tests', () => {
     menuPage.verifyCheckoutValue('17.00');
   });
 
-  it('Displays confirm modal when right clicking on coffee product', () => {});
+  it('Add coffee product via add to cart modal', () => {
+    cy.log('Right click coffee product to open modal');
+    cy.get('[data-test="Espresso"]').rightclick();
+    menuPage.addToCartModalDisplayed();
+
+    cy.log('Click yes and confirm product added');
+    cy.get('[method="dialog"]').contains('Yes').click();
+    menuPage.verifyMenuCartValue(1);
+    menuPage.verifyCheckoutValue('10.00');
+  });
 });
