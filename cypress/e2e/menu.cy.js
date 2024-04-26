@@ -102,4 +102,14 @@ describe('Coffee-cart menu tests', () => {
     menuPage.verifyMenuCartValue(1);
     menuPage.verifyCheckoutValue('10.00');
   });
+
+  it('Should display an offer when 3 products added', () => {
+    cy.log('Add three products to cart');
+    cy.clickDataElement('Espresso');
+    cy.clickDataElement('Mocha');
+    cy.clickDataElement('Americano');
+
+    cy.log('Verify offers modal displayed');
+    menuPage.productOfferModalDisplayed();
+  });
 });

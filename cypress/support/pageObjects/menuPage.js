@@ -25,6 +25,20 @@ export const menuPage = {
       cy.wrap(addToCartModal).find('button').contains('No');
     });
   },
+  productOfferModalDisplayed: () => {
+    cy.get('.promo').should('be.visible');
+    cy.get('.promo').contains(
+      `It's your lucky day! Get an extra cup of Mocha for $4.`
+    );
+    coffeeCup.coffeeCupIngredientsDisplayed('(Discounted)-Mocha', [
+      'whipped cream',
+      'steamed milk',
+      'chocolate syrup',
+      'espresso',
+    ]);
+    cy.get('.promo').find('.buttons').contains('Yes, of course!');
+    cy.get('.promo').find('.buttons').contains(`Nah, I'll skip.`);
+  },
 };
 
 export const coffeeCup = {
